@@ -4,6 +4,8 @@ import { AppThunk } from './store'
 import { authAPI } from 'api/todolists-api'
 import { authActions } from 'features/Login/authSlice'
 
+export * as appSelectors from './selectors' 
+
 const initialState = {
     status: 'idle' as RequestStatusType,
     error: null as null | string,
