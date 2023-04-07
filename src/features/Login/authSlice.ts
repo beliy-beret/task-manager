@@ -4,6 +4,8 @@ import { handleServerAppError, handleServerNetworkError } from 'utils/error-util
 
 import { AppThunk } from 'app/store';
 import { appActions } from 'app/appSlice';
+import { tasksActions } from 'features/TodolistsList/tasksSlice';
+import { todoActions } from 'features/TodolistsList/todoSlice';
 
 const initialState = {
     isLoggedIn: false
@@ -47,6 +49,7 @@ export const logoutTC = (): AppThunk => (dispatch) => {
             if (res.data.resultCode === 0) {
                 dispatch(authActions.setIsLoggedIn({isLoggedIn: false}))
                 dispatch(appActions.setAppStatus({status: 'succeeded'}))
+                dispatch(todoActions.clearData())                
             } else {
                 handleServerAppError(res.data, dispatch)
             }

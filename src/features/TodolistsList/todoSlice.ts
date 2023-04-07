@@ -35,6 +35,9 @@ const slice = createSlice({
         },
         changeTodoEntityStatus: (state, action: PayloadAction<{todoId: string; status: RequestStatusType}>) => {
             state.forEach(t => t.id === action.payload.todoId && t.entityStatus === action.payload.status)
+        },
+        clearData: () => {
+            return []
         }
     },    
 })

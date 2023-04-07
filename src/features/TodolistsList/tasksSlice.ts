@@ -41,6 +41,7 @@ const slice = createSlice({
         .addCase(todoActions.setTodos, (state, action) => {
             action.payload.forEach(t => state[t.id] = [])
         })
+        .addCase(todoActions.clearData, () => ({}))
     }    
 })
 

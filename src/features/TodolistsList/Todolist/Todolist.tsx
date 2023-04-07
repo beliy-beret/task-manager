@@ -7,8 +7,6 @@ import { AddItemForm } from '../../../components/AddItemForm/AddItemForm'
 import { Delete } from '@mui/icons-material'
 import { EditableSpan } from '../../../components/EditableSpan/EditableSpan'
 import { Task } from './Task/Task'
-import { fetchTasksTC } from '../tasksSlice'
-import { useAppDispatch } from '../../../hooks/useAppDispatch';
 
 type PropsType = {
     todolist: TodolistDomainType
@@ -24,8 +22,6 @@ type PropsType = {
 }
 
 export const Todolist = React.memo(function ({demo = false, ...props}: PropsType) {
-
-    const dispatch = useAppDispatch()
 
     const addTask = useCallback((title: string) => {
         props.addTask(title, props.todolist.id)
