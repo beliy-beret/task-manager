@@ -3,6 +3,7 @@ import { RequestStatusType, appActions } from 'app/appSlice';
 import { TodolistType, todolistsAPI } from 'api/todolists-api';
 
 import { AppThunk } from 'app/store';
+import { fetchTasksTC } from './tasksSlice';
 import { handleServerNetworkError } from 'utils/error-utils';
 
 const initialState: Array<TodolistDomainType> = []
@@ -49,7 +50,9 @@ export const fetchTodolistsTC = (): AppThunk => {
             .then((res) => {                
                 dispatch(todoActions.setTodos(res.data))
                 dispatch(appActions.setAppStatus({status: 'succeeded'}))
+                return res.data
             })
+            .then((todos) => todos.forEach((todo) => dispatch(fetchTasksTC(todo.id))))
             .catch(error => {
                 handleServerNetworkError(error, dispatch);
             })
