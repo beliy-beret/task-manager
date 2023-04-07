@@ -1,17 +1,17 @@
 import { AnyAction, combineReducers } from 'redux'
 import thunkMiddleware, { ThunkAction, ThunkDispatch } from 'redux-thunk'
 
-import {appReducer} from './app-reducer'
-import {authReducer} from '../features/Login/auth-reducer'
+import {appReducer} from './appSlice'
+import {authReducer} from '../features/Login/authSlice'
 import { configureStore } from '@reduxjs/toolkit';
-import {tasksReducer} from '../features/TodolistsList/tasks-reducer';
-import {todolistsReducer} from '../features/TodolistsList/todolists-reducer';
+import {tasksReducer} from '../features/TodolistsList/tasksSlice';
+import {todoReducer} from '../features/TodolistsList/todoSlice';
 
 // объединяя reducer-ы с помощью combineReducers,
 // мы задаём структуру нашего единственного объекта-состояния
 const rootReducer = combineReducers({
     tasks: tasksReducer,
-    todolists: todolistsReducer,
+    todos: todoReducer,
     app: appReducer,
     auth: authReducer
 })
