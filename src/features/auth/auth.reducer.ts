@@ -1,14 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit'
-import { appActions } from 'app/app.reducer'
-import { authAPI, LoginParamsType } from 'features/auth/auth.api'
-import { clearTasksAndTodolists } from 'common/actions'
-import {
-  createAppAsyncThunk,
-  handleServerAppError,
-  handleServerNetworkError,
-  thunkTryCatch,
-} from 'common/utils'
+import { LoginParamsType, authAPI } from 'features/auth/auth.api'
+
 import { ResultCode } from 'common/enums'
+import { appActions } from 'app/app.reducer'
+import { clearTasksAndTodolists } from 'common/actions'
+import { createAppAsyncThunk } from 'common/utils'
+import { createSlice } from '@reduxjs/toolkit'
 
 const login = createAppAsyncThunk<{ isLoggedIn: boolean }, LoginParamsType>(
   'auth/login',

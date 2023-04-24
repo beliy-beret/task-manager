@@ -1,6 +1,5 @@
 import {
   TodolistDomainType,
-  todolistsActions,
   todolistsReducer,
   todolistsThunks,
 } from 'features/todolists-list/todolists/todolists.reducer'
