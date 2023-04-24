@@ -1,7 +1,3 @@
-import React from 'react'
-import { FormikHelpers, useFormik } from 'formik'
-import { useSelector } from 'react-redux'
-import { Navigate } from 'react-router-dom'
 import {
   Button,
   Checkbox,
@@ -12,12 +8,17 @@ import {
   Grid,
   TextField,
 } from '@mui/material'
-import { useActions } from 'common/hooks'
-import { selectIsLoggedIn } from 'features/auth/auth.selectors'
-import { authThunks } from 'features/auth/auth.reducer'
+import { FormikHelpers, useFormik } from 'formik'
+
 import { LoginParamsType } from 'features/auth/auth.api'
+import { Navigate } from 'react-router-dom'
+import React from 'react'
 import { ResponseType } from 'common/types'
+import { authThunks } from 'features/auth/auth.reducer'
 import s from './styles.module.css'
+import { selectIsLoggedIn } from 'features/auth/auth.selectors'
+import { useActions } from 'common/hooks'
+import { useSelector } from 'react-redux'
 
 type FormikErrorType = Partial<Omit<LoginParamsType, 'captcha'>>
 

@@ -1,5 +1,6 @@
-import React, { ChangeEvent, KeyboardEvent, useState } from 'react'
 import { IconButton, TextField } from '@mui/material'
+import React, { ChangeEvent, KeyboardEvent, useState } from 'react'
+
 import { AddBox } from '@mui/icons-material'
 import { RejectValueType } from 'common/utils/create-app-async-thunk'
 
@@ -27,7 +28,7 @@ export const AddItemForm = React.memo(function ({
             setError(
               messages.length
                 ? messages[0]
-                : 'Some error occurredddd dddddddd dddddd dgdffdg'
+                : 'Some error'
             )
           }
         })

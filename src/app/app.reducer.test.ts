@@ -29,7 +29,7 @@ test('correct status should be set', () => {
 test('isInitialized should be TRUE', () => {
   const endState = appReducer(
     startState,
-    appActions.setAppInitialized({isInitialized: true})
+    appActions.setAppInitialized({ isInitialized: true })
   )
   expect(endState.isInitialized).toBeTruthy()
 })

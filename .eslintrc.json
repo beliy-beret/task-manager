@@ -16,12 +16,13 @@
   },
   "plugins": ["react", "@typescript-eslint", "unused-imports", "prettier"],
   "rules": {
-    "prettier/prettier": "error",
+    "prettier/prettier": ["error", {"endOfLine": "auto"}],
     "react/react-in-jsx-scope": "off",
     "semi": "off",
     "no-debugger": "off",
     "no-duplicate-imports": "warn",
     "no-unused-vars": "off",
-    "unused-imports/no-unused-imports": "error"
+    "unused-imports/no-unused-imports": "error",
+    "linebreak-style": "off"
   }
 }
