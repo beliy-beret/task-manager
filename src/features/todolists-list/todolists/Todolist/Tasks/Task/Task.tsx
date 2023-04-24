@@ -1,19 +1,20 @@
-import React, { ChangeEvent, FC, memo } from 'react'
 import { Checkbox, IconButton } from '@mui/material'
+import React, { ChangeEvent, FC, memo } from 'react'
+
 import { Delete } from '@mui/icons-material'
 import { EditableSpan } from 'common/components'
 import { TaskStatuses } from 'common/enums'
 import { TaskType } from 'features/todolists-list/tasks/tasks.api'
-import { useActions } from 'common/hooks'
-import { tasksThunks } from 'features/todolists-list/tasks/tasks.reducer'
 import s from 'features/todolists-list/todolists/Todolist/Tasks/Task/styles.module.css'
+import { tasksThunks } from 'features/todolists-list/tasks/tasks.reducer'
+import { useActions } from 'common/hooks'
 
-type Props = {
+type PropsType = {
   task: TaskType
   todolistId: string
 }
 
-export const Task: FC<Props> = memo(({ task, todolistId }) => {
+export const Task: FC<PropsType> = memo(({ task, todolistId }) => {
   const { removeTask, updateTask } = useActions(tasksThunks)
 
   const removeTaskHandler = () => removeTask({ taskId: task.id, todolistId })

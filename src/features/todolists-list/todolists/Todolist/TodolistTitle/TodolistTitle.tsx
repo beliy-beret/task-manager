@@ -1,18 +1,19 @@
-import { EditableSpan } from 'common/components'
-import { IconButton } from '@mui/material'
-import { Delete } from '@mui/icons-material'
 import React, { FC } from 'react'
-import { useActions } from 'common/hooks'
 import {
   TodolistDomainType,
   todolistsThunks,
 } from 'features/todolists-list/todolists/todolists.reducer'
 
-type Props = {
+import { Delete } from '@mui/icons-material'
+import { EditableSpan } from 'common/components'
+import { IconButton } from '@mui/material'
+import { useActions } from 'common/hooks'
+
+type PropsType = {
   todolist: TodolistDomainType
 }
 
-export const TodolistTitle: FC<Props> = ({ todolist }) => {
+export const TodolistTitle: FC<PropsType> = ({ todolist }) => {
   const { removeTodolist, changeTodolistTitle } = useActions(todolistsThunks)
 
   const removeTodolistHandler = () => {

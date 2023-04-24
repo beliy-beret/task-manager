@@ -1,4 +1,4 @@
-import { appActions, AppInitialStateType, appReducer } from 'app/app.reducer'
+import { AppInitialStateType, appActions, appReducer } from 'app/app.reducer'
 
 let startState: AppInitialStateType
 
@@ -24,4 +24,12 @@ test('correct status should be set', () => {
     appActions.setAppStatus({ status: 'loading' })
   )
   expect(endState.status).toBe('loading')
+})
+
+test('isInitialized should be TRUE', () => {
+  const endState = appReducer(
+    startState,
+    appActions.setAppInitialized({isInitialized: true})
+  )
+  expect(endState.isInitialized).toBeTruthy()
 })

@@ -1,17 +1,18 @@
-import React, { FC } from 'react'
-import { Button } from '@mui/material'
-import { useActions } from 'common/hooks'
 import {
   FilterValuesType,
   TodolistDomainType,
   todolistsActions,
 } from 'features/todolists-list/todolists/todolists.reducer'
+import React, { FC } from 'react'
 
-type Props = {
+import { Button } from '@mui/material'
+import { useActions } from 'common/hooks'
+
+type PropsType = {
   todolist: TodolistDomainType
 }
 
-export const FilterTasksButtons: FC<Props> = ({ todolist }) => {
+export const FilterTasksButtons: FC<PropsType> = ({ todolist }) => {
   const { changeTodolistFilter } = useActions(todolistsActions)
 
   const changeFilterHandler = (filter: FilterValuesType) => {

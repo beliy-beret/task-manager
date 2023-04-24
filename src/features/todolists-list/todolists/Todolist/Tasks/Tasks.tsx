@@ -1,15 +1,16 @@
 import React, { FC } from 'react'
+
 import { Task } from 'features/todolists-list/todolists/Todolist/Tasks/Task/Task'
 import { TaskStatuses } from 'common/enums'
-import { TodolistDomainType } from 'features/todolists-list/todolists/todolists.reducer'
 import { TaskType } from 'features/todolists-list/tasks/tasks.api'
+import { TodolistDomainType } from 'features/todolists-list/todolists/todolists.reducer'
 
-type Props = {
+type PropsType = {
   todolist: TodolistDomainType
   tasks: TaskType[]
 }
 
-export const Tasks: FC<Props> = ({ tasks, todolist }) => {
+export const Tasks: FC<PropsType> = ({ tasks, todolist }) => {
   let tasksForTodolist = tasks
 
   if (todolist.filter === 'active') {
