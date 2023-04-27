@@ -4,7 +4,6 @@ import { AddItemForm } from 'common/components'
 import { Grid } from '@mui/material'
 import { Navigate } from 'react-router-dom'
 import { selectIsLoggedIn } from 'features/auth/auth.selectors'
-import { selectTasks } from 'features/todolists-list/tasks/tasks.selectors'
 import { todolistsThunks } from 'features/todolists-list/todolists/todolists.reducer'
 import { useActions } from 'common/hooks'
 import { useSelector } from 'react-redux'
@@ -12,10 +11,7 @@ import { useSelector } from 'react-redux'
 //import { selectTodolists } from 'features/todolists-list/todolists/todolists.selectors'
 
 export const TodolistsList = () => {
-  //const todolists = useSelector(selectTodolists)
-  const tasks = useSelector(selectTasks)
   const isLoggedIn = useSelector(selectIsLoggedIn)
-
   const { addTodolist, fetchTodolists } = useActions(todolistsThunks)
 
   useEffect(() => {
@@ -27,7 +23,6 @@ export const TodolistsList = () => {
 
   const addTodolistCallback = (title: string) => {
     return addTodolist(title).unwrap()
-    // addTodolist(title)
   }
 
   if (!isLoggedIn) {

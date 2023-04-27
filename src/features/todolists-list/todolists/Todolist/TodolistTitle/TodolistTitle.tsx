@@ -5,7 +5,6 @@ import {
 } from 'features/todolists-list/todolists/todolists.reducer'
 
 import { Delete } from '@mui/icons-material'
-import { EditableSpan } from 'common/components'
 import { IconButton } from '@mui/material'
 import { useActions } from 'common/hooks'
 
@@ -26,10 +25,10 @@ export const TodolistTitle: FC<PropsType> = ({ todolist }) => {
 
   return (
     <h3>
-      <EditableSpan
+      {/* <EditableSpan
         value={todolist.title}
         onChange={changeTodolistTitleHandler}
-      />
+      /> */}
       <IconButton
         onClick={removeTodolistHandler}
         disabled={todolist.entityStatus === 'loading'}

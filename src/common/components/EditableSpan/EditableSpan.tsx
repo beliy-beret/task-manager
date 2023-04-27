@@ -1,35 +1,36 @@
-import React, { ChangeEvent, useState } from 'react'
-import { TextField } from '@mui/material'
+import React, { ChangeEvent, KeyboardEvent, useState } from 'react'
+import { TextField, Typography } from '@mui/material'
 
 type EditableSpanPropsType = {
+  isEdit: boolean
   value: string
   onChange: (newValue: string) => void
 }
 
 export const EditableSpan = React.memo(function (props: EditableSpanPropsType) {
-  const [editMode, setEditMode] = useState(false)
   const [title, setTitle] = useState(props.value)
 
-  const activateEditMode = () => {
-    setEditMode(true)
-    setTitle(props.value)
-  }
-  const activateViewMode = () => {
-    setEditMode(false)
-    props.onChange(title)
-  }
-  const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
+  const titleHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.currentTarget.value)
   }
+  const setNewTitle = () => props.onChange(title)
+  const onPressEnter = (e: KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      props.onChange(title)
+    }
+  }
 
-  return editMode ? (
+  return props.isEdit ? (
     <TextField
       value={title}
-      onChange={changeTitle}
-      autoFocus
-      onBlur={activateViewMode}
+      onChange={titleHandler}
+      onBlur={setNewTitle}
+      onKeyDown={onPressEnter}
+      size='small'
     />
   ) : (
-    <span onDoubleClick={activateEditMode}>{props.value}</span>
+    <Typography variant='h3' sx={{ fontSize: '1.5rem' }}>
+      {props.value}
+    </Typography>
   )
 })

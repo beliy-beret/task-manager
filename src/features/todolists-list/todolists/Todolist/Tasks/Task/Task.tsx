@@ -2,7 +2,6 @@ import { Checkbox, IconButton } from '@mui/material'
 import React, { ChangeEvent, FC, memo } from 'react'
 
 import { Delete } from '@mui/icons-material'
-import { EditableSpan } from 'common/components'
 import { TaskStatuses } from 'common/enums'
 import { TaskType } from 'features/todolists-list/tasks/tasks.api'
 import s from 'features/todolists-list/todolists/Todolist/Tasks/Task/styles.module.css'
@@ -41,7 +40,7 @@ export const Task: FC<PropsType> = memo(({ task, todolistId }) => {
         onChange={changeStatusHandler}
       />
 
-      <EditableSpan value={task.title} onChange={changeTitleHandler} />
+      {/* <EditableSpan value={task.title} onChange={changeTitleHandler} /> */}
       <IconButton onClick={removeTaskHandler}>
         <Delete />
       </IconButton>

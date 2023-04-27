@@ -1,16 +1,15 @@
 import { Box, Grid } from '@mui/material'
 import React, { useEffect } from 'react'
 
+import { Departments } from './departments/Departments'
 import { Navigate } from 'react-router-dom'
 import { departmentsThunks } from './departments/departments.reducer'
-import { selectDepartments } from './departments/departments.selectors'
 import { selectIsLoggedIn } from 'features/auth/auth.selectors'
 import { selectTasks } from 'features/todolists-list/tasks/tasks.selectors'
 import { useActions } from 'common/hooks'
 import { useSelector } from 'react-redux'
 
 export const Desk = () => {
-  const departments = useSelector(selectDepartments)
   const tasks = useSelector(selectTasks)
   const isLoggedIn = useSelector(selectIsLoggedIn)
 
@@ -35,9 +34,7 @@ export const Desk = () => {
     <Grid container>
       <Grid item>
         <Box>
-          {departments.map((dept) => (
-            <Box key={dept.id}>{dept.title}</Box>
-          ))}
+          <Departments />
         </Box>
       </Grid>
       <Grid item>

@@ -23,6 +23,7 @@
     "no-duplicate-imports": "warn",
     "no-unused-vars": "off",
     "unused-imports/no-unused-imports": "error",
-    "linebreak-style": "off"
+    "linebreak-style": "off",
+    "react/display-name": "off"
   }
 }
