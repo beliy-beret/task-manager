@@ -12,10 +12,10 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import React, { useEffect } from 'react'
 import { selectAppStatus, selectIsInitialized } from 'app/app.selectors'
 
+import { Desk } from 'features/crm/desk'
 import { ErrorSnackbar } from 'common/components'
 import { Login } from 'features/auth/Login/Login'
 import { Menu } from '@mui/icons-material'
-import { TodolistsList } from 'features/todolists-list/TodolistsList'
 import { authThunks } from 'features/auth/auth.reducer'
 import { selectIsLoggedIn } from 'features/auth/auth.selectors'
 import { useActions } from 'common/hooks'
@@ -69,7 +69,7 @@ const App = () => {
         </AppBar>
         <Container fixed>
           <Routes>
-            <Route path={'/'} element={<TodolistsList />} />
+            <Route path={'/'} element={<Desk />} />
             <Route path={'/login'} element={<Login />} />
           </Routes>
         </Container>
