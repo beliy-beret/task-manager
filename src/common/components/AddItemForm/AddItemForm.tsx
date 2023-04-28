@@ -1,17 +1,19 @@
-import { IconButton, TextField } from '@mui/material'
+import { Box, Button, TextField } from '@mui/material'
 import React, { ChangeEvent, KeyboardEvent, useState } from 'react'
 
-import { AddBox } from '@mui/icons-material'
+import AddIcon from '@mui/icons-material/Add'
 import { RejectValueType } from 'common/utils/create-app-async-thunk'
 
 type Props = {
   addItem: (title: string) => Promise<any>
   disabled?: boolean
+  placeHolder?: string
 }
 
 export const AddItemForm = React.memo(function ({
   addItem,
   disabled = false,
+  placeHolder = 'Title',
 }: Props) {
   const [title, setTitle] = useState('')
   const [error, setError] = useState<string | null>(null)
@@ -25,15 +27,11 @@ export const AddItemForm = React.memo(function ({
         .catch((err: RejectValueType) => {
           if (err.data) {
             const messages = err.data.messages
-            setError(
-              messages.length
-                ? messages[0]
-                : 'Some error'
-            )
+            setError(messages.length ? messages[0] : 'Some error')
           }
         })
     } else {
-      setError('Title is required')
+      setError(`${placeHolder} is required`)
     }
   }
 
@@ -51,7 +49,7 @@ export const AddItemForm = React.memo(function ({
   }
 
   return (
-    <div>
+    <Box display={'flex'} justifyContent={'space-between'} gap={1} pt={1}>
       <TextField
         variant='outlined'
         disabled={disabled}
@@ -59,12 +57,19 @@ export const AddItemForm = React.memo(function ({
         value={title}
         onChange={onChangeHandler}
         onKeyPress={onKeyPressHandler}
-        label='Title'
+        label={placeHolder}
         helperText={error}
+        size='small'
+        fullWidth
       />
-      <IconButton color='primary' onClick={addItemHandler} disabled={disabled}>
-        <AddBox />
-      </IconButton>
-    </div>
+      <Button
+        variant='contained'
+        onClick={addItemHandler}
+        disabled={disabled}
+        sx={{ maxHeight: '2.4rem' }}
+      >
+        <AddIcon />
+      </Button>
+    </Box>
   )
 })

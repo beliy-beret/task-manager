@@ -1,19 +1,17 @@
-import { Box, Grid } from '@mui/material'
 import React, { useEffect } from 'react'
 
 import { Departments } from './departments/Departments'
+import { Grid } from '@mui/material'
 import { Navigate } from 'react-router-dom'
 import { departmentsThunks } from './departments/departments.reducer'
 import { selectIsLoggedIn } from 'features/auth/auth.selectors'
-import { selectTasks } from 'features/todolists-list/tasks/tasks.selectors'
 import { useActions } from 'common/hooks'
 import { useSelector } from 'react-redux'
 
 export const Desk = () => {
-  const tasks = useSelector(selectTasks)
   const isLoggedIn = useSelector(selectIsLoggedIn)
 
-  const { addDepartment, fetchDepartments } = useActions(departmentsThunks)
+  const { fetchDepartments } = useActions(departmentsThunks)
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -22,23 +20,17 @@ export const Desk = () => {
     fetchDepartments({})
   }, [])
 
-  const addDepartmentCallback = (title: string) => {
-    return addDepartment(title).unwrap()
-  }
-
   if (!isLoggedIn) {
     return <Navigate to={'/login'} />
   }
 
   return (
-    <Grid container>
-      <Grid item>
-        <Box>
-          <Departments />
-        </Box>
+    <Grid container sx={{ minHeight: '95vh' }}>
+      <Grid item sx={{ borderRight: '2px solid grey', pr: '1rem' }} xs={4}>
+        <Departments />
       </Grid>
-      <Grid item>
-        <Box>Grid</Box>
+      <Grid item xs={8}>
+        Task list
       </Grid>
     </Grid>
   )
