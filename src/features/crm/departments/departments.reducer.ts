@@ -94,7 +94,7 @@ const slice = createSlice({
           ...dept,
           entityStatus: 'idle',
         }))
-        state.activeDepartmentId = action.payload.departments[0].id
+        state.activeDepartmentId = action.payload.departments[1].id
       })
       .addCase(addDepartment.fulfilled, (state, action) => {
         const newDepartment: DepartmentDomainType = {

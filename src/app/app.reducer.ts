@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   status: 'idle' as RequestStatusType,
@@ -44,7 +44,6 @@ const slice = createSlice({
           return action.type.endsWith('/rejected')
         },
         (state, action) => {
-          debugger
           const { payload, error } = action
           if (payload) {
             if (payload.showGlobalError) {

@@ -66,7 +66,7 @@ const App = () => {
         </Toolbar>
         {status === 'loading' && <LinearProgress />}
       </AppBar>
-      <Container fixed sx={{ minHeight: '100%' }}>
+      <Container maxWidth={'xl'} sx={{ minHeight: '100%' }}>
         <Routes>
           <Route path={'/'} element={<Desk />} />
           <Route path={'/login'} element={<Login />} />

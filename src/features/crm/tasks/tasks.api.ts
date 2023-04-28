@@ -1,7 +1,8 @@
-import { instance } from 'common/api'
-import { ResponseType } from 'common/types/common.types'
 import { TaskPriorities, TaskStatuses } from 'common/enums'
-import { UpdateDomainTaskModelType } from 'features/todolists-list/tasks/tasks.reducer'
+
+import { ResponseType } from 'common/types/common.types'
+import { UpdateDomainTaskModelType } from './tasks.reducer'
+import { instance } from 'common/api'
 
 export const tasksApi = {
   getTasks(todolistId: string) {
