@@ -11,52 +11,94 @@ import {
   Typography,
 } from '@mui/material'
 import React, { memo, useState } from 'react'
-import { RemoveTaskArgType, TaskType, UpdateTaskArgType } from '../tasks.api'
-
+import {
+  RemoveTaskArgType,
+  TaskType,
+  UpdateTaskArgType,
+  UpdateTaskModelType,
+} from '../tasks.api'
+import { useDrag } from 'react-dnd'
 import DeleteIcon from '@mui/icons-material/Delete'
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline'
 import QueryBuilderIcon from '@mui/icons-material/QueryBuilder'
 import SettingsIcon from '@mui/icons-material/Settings'
 import TimerOffIcon from '@mui/icons-material/TimerOff'
+import { ItemTypes } from '../taskList/TaskList'
+import { TaskForm } from '../taskForm/TaskForm'
 
 type PropsType = {
   task: TaskType
-  updateTask: (formData: UpdateTaskArgType) => void
+  updateTask: (args: UpdateTaskArgType) => void
   removeTask: ({ taskId, todolistId }: RemoveTaskArgType) => void
 }
 
 export const Task = memo(({ task, removeTask, updateTask }: PropsType) => {
+  // Menu display logic
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const isOpen = Boolean(anchorEl)
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+  const openMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
   }
-  const handleClose = () => {
+  const closeMenu = () => {
     setAnchorEl(null)
   }
-  const [isEdit, setIsEdit] = useState(false)
-  const activateEditMode = () => {
-    setIsEdit(true)
-    handleClose()
+
+  // DnD logic
+  const [{ isDragging }, drag] = useDrag<
+    Pick<TaskType, 'id' | 'todoListId'>,
+    unknown,
+    { isDragging: boolean }
+  >({
+    type: ItemTypes.TASK,
+    item: { id: task.id, todoListId: task.todoListId },
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  })
+
+  // Form logic
+  const [formIsOpen, setFormIsOpen] = useState<boolean>(false)
+  const openForm = () => setFormIsOpen(true)
+  const closeForm = (
+    event: object,
+    reason?: 'backdropClick' | 'escapeKeyDown'
+  ) => {
+    if (reason !== 'backdropClick') {
+      setFormIsOpen(false)
+    }
   }
 
-  const changeTask = (formData: UpdateTaskArgType) => {
-    updateTask(formData)
-    setIsEdit(false)
+  const initialValues: UpdateTaskModelType = {
+    title: task.title,
+    deadline: task.deadline,
+    description: task.description,
+    priority: task.priority,
+    startDate: task.startDate,
+    status: task.status,
   }
 
+  // Task logic
+  const editTaskHandler = () => {
+    openForm()
+    closeMenu()
+  }
   const deleteTask = () => {
     removeTask({ taskId: task.id, todolistId: task.todoListId })
-    setIsEdit(false)
   }
+  const changeTask = (formData: UpdateTaskModelType) =>
+    updateTask({
+      taskId: task.id,
+      todolistId: task.todoListId,
+      domainModel: formData,
+    })
 
   return (
-    <Paper elevation={3}>
+    <Paper elevation={3} ref={drag} sx={{ opacity: isDragging ? '0.5' : '1' }}>
       <Card>
         <CardHeader
           title={task.title}
           action={
-            <IconButton onClick={handleClick}>
+            <IconButton onClick={openMenu}>
               <SettingsIcon />
             </IconButton>
           }
@@ -66,7 +108,7 @@ export const Task = memo(({ task, removeTask, updateTask }: PropsType) => {
             {task.description || 'Description is empty.'}
           </Typography>
           <Divider sx={{ m: '8px' }} />
-          <Box display={'flex'} alignItems={'center'}>
+          <Box display={'flex'} flexDirection={'column'}>
             <Box display={'flex'}>
               <QueryBuilderIcon />
               <Typography>{task.addedDate}</Typography>
@@ -82,17 +124,23 @@ export const Task = memo(({ task, removeTask, updateTask }: PropsType) => {
       </Card>
       <Menu
         open={isOpen}
-        onClose={handleClose}
+        onClose={closeMenu}
         anchorEl={anchorEl}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
-        <MenuItem onClick={activateEditMode}>
+        <MenuItem onClick={editTaskHandler}>
           <DriveFileRenameOutlineIcon /> Change
         </MenuItem>
         <MenuItem onClick={deleteTask}>
           <DeleteIcon /> Delete
         </MenuItem>
       </Menu>
+      <TaskForm
+        open={formIsOpen}
+        closeForm={closeForm}
+        initialValues={initialValues}
+        onSubmit={changeTask}
+      />
     </Paper>
   )
 })
