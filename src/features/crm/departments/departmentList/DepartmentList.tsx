@@ -8,9 +8,13 @@ import { useActions } from 'common/hooks'
 
 type PropsType = {
   departmentList: DepartmentType[]
+  activeItemId?: string
 }
 
-export const DepartmentList: FC<PropsType> = ({ departmentList }) => {
+export const DepartmentList: FC<PropsType> = ({
+  departmentList,
+  activeItemId,
+}) => {
   const { changeDepartmentTitle, removeDepartment } =
     useActions(departmentsThunks)
 
@@ -24,6 +28,7 @@ export const DepartmentList: FC<PropsType> = ({ departmentList }) => {
         title={dept.title}
         changeTitle={changeTitle}
         deleteDepartment={deleteDepartment}
+        active={dept.id === activeItemId}
       />
     )
   })

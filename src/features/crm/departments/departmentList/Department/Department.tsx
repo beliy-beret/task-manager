@@ -5,15 +5,17 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline'
 import { EditableSpan } from 'common/components'
 import SettingsIcon from '@mui/icons-material/Settings'
+import classes from './department.module.css'
 
 type PropsType = {
   title: string
+  active?: boolean
   changeTitle: (title: string) => void
   deleteDepartment: () => void
 }
 
 export const Department = memo(
-  ({ title, changeTitle, deleteDepartment }: PropsType) => {
+  ({ title, changeTitle, deleteDepartment, active }: PropsType) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
     const isOpen = Boolean(anchorEl)
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -33,13 +35,18 @@ export const Department = memo(
       setIsEdit(false)
     }, [])
 
+    const itemClass = classes.item + ' ' + (active ? classes.active : '')
+
     return (
       <Box
         display={'flex'}
         justifyContent={'space-between'}
         alignItems={'center'}
+        className={itemClass}
       >
-        <EditableSpan isEdit={isEdit} value={title} onChange={rename} />
+        <Box sx={{ pl: '0.5rem' }}>
+          <EditableSpan isEdit={isEdit} value={title} onChange={rename} />
+        </Box>
 
         <IconButton onClick={handleClick}>
           <SettingsIcon />

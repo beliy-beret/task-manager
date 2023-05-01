@@ -26,8 +26,8 @@ export const Desk = () => {
   }
 
   return (
-    <Grid container spacing={2} alignItems={'stretch'} sx={{ height: '100%' }}>
-      <Grid item sx={{ borderRight: '2px solid grey', pr: '1rem' }} xs={2.5}>
+    <Grid container spacing={1} alignItems={'stretch'} sx={{ height: '100%' }}>
+      <Grid item sx={{ pr: '1rem' }} xs={2.5}>
         <Departments />
       </Grid>
       <Grid item xs={9.5}>

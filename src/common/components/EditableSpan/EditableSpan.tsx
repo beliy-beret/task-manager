@@ -29,7 +29,7 @@ export const EditableSpan = React.memo(function (props: EditableSpanPropsType) {
       size='small'
     />
   ) : (
-    <Typography variant='h3' sx={{ fontSize: '1.5rem' }}>
+    <Typography variant='h6' component={'h3'}>
       {props.value}
     </Typography>
   )
