@@ -1,8 +1,5 @@
 import {
   Box,
-  Card,
-  CardContent,
-  CardHeader,
   Divider,
   IconButton,
   Menu,
@@ -17,14 +14,15 @@ import {
   UpdateTaskArgType,
   UpdateTaskModelType,
 } from '../tasks.api'
-import { useDrag } from 'react-dnd'
+
 import DeleteIcon from '@mui/icons-material/Delete'
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline'
+import { ItemTypes } from '../taskList/TaskList'
 import QueryBuilderIcon from '@mui/icons-material/QueryBuilder'
 import SettingsIcon from '@mui/icons-material/Settings'
-import TimerOffIcon from '@mui/icons-material/TimerOff'
-import { ItemTypes } from '../taskList/TaskList'
 import { TaskForm } from '../taskForm/TaskForm'
+import TimerOffIcon from '@mui/icons-material/TimerOff'
+import { useDrag } from 'react-dnd'
 
 type PropsType = {
   task: TaskType
@@ -78,6 +76,9 @@ export const Task = memo(({ task, removeTask, updateTask }: PropsType) => {
   }
 
   // Task logic
+  const [isEllipsis, setIsEllipsis] = useState(true)
+  const isEllipsisHandler = () => setIsEllipsis(!isEllipsis)
+
   const editTaskHandler = () => {
     openForm()
     closeMenu()
@@ -93,35 +94,58 @@ export const Task = memo(({ task, removeTask, updateTask }: PropsType) => {
     })
 
   return (
-    <Paper elevation={3} ref={drag} sx={{ opacity: isDragging ? '0.5' : '1' }}>
-      <Card>
-        <CardHeader
-          title={task.title}
-          action={
-            <IconButton onClick={openMenu}>
-              <SettingsIcon />
-            </IconButton>
-          }
-        />
-        <CardContent>
-          <Typography variant='body1'>
-            {task.description || 'Description is empty.'}
+    <Paper
+      elevation={3}
+      ref={drag}
+      sx={{ opacity: isDragging ? '0.5' : '1', fontSize: '16px', p: '8px' }}
+    >
+      <Box
+        display={'flex'}
+        justifyContent={'space-between'}
+        alignItems={'center'}
+      >
+        <Typography variant='h6' component={'h3'}>
+          {task.title}
+        </Typography>
+        <IconButton onClick={openMenu}>
+          <SettingsIcon fontSize='small' />
+        </IconButton>
+      </Box>
+      <Divider />
+      <Typography
+        paragraph
+        variant='body2'
+        sx={{
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          display: '-webkit-box',
+          WebkitLineClamp: isEllipsis ? '2' : 'none',
+          WebkitBoxOrient: 'vertical',
+          mt: '8px',
+          cursor: 'pointer',
+        }}
+        onClick={isEllipsisHandler}
+      >
+        {task.description || 'Description is empty.'}
+      </Typography>
+      <Divider />
+      <Box display={'flex'} flexDirection={'column'} sx={{ mt: '8px' }}>
+        <Box display={'flex'}>
+          <QueryBuilderIcon fontSize='small' />
+          <Typography component={'span'} sx={{ fontSize: '0.8rem' }}>
+            {task.addedDate}
           </Typography>
-          <Divider sx={{ m: '8px' }} />
-          <Box display={'flex'} flexDirection={'column'}>
-            <Box display={'flex'}>
-              <QueryBuilderIcon />
-              <Typography>{task.addedDate}</Typography>
-            </Box>
-            {task.deadline && (
-              <Box display={'flex'}>
-                <TimerOffIcon />
-                <Typography>{task.deadline}</Typography>{' '}
-              </Box>
-            )}
+        </Box>
+        {task.deadline && (
+          <Box display={'flex'}>
+            <TimerOffIcon fontSize='small' />
+            <Typography component='span' sx={{ fontSize: '0.8rem' }}>
+              {task.deadline}
+            </Typography>
           </Box>
-        </CardContent>
-      </Card>
+        )}
+      </Box>
+
       <Menu
         open={isOpen}
         onClose={closeMenu}
