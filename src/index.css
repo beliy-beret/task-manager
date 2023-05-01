@@ -9,9 +9,14 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
-body, html {
-  height: 86vh;
+
+html, body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
 }
+
 #root {
   height: 100%;
 }

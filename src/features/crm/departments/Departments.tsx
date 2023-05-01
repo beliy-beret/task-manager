@@ -1,3 +1,5 @@
+import { Box, Divider, Typography } from '@mui/material'
+import { departmentsActions, departmentsThunks } from './departments.reducer'
 import {
   selectActiveDepartmentId,
   selectDepartments,
@@ -5,9 +7,7 @@ import {
 
 import { AddItemForm } from 'common/components'
 import { DepartmentList } from './departmentList/DepartmentList'
-import { Divider } from '@mui/material'
 import React from 'react'
-import { departmentsThunks } from './departments.reducer'
 import { useActions } from 'common/hooks'
 import { useSelector } from 'react-redux'
 
@@ -18,7 +18,7 @@ export const Departments = () => {
   const addDepartmentCallback = (title: string) => {
     return addDepartment(title).unwrap()
   }
-
+  const { changeActiveDepartmentId } = useActions(departmentsActions)
   return (
     <>
       <AddItemForm
@@ -26,10 +26,19 @@ export const Departments = () => {
         placeHolder={'Department name'}
       />
       <Divider orientation='horizontal' sx={{ m: '0.5rem 0' }} />
-      <DepartmentList
-        departmentList={departments}
-        activeItemId={activeDepartmentId}
-      />
+      {departments.length ? (
+        <DepartmentList
+          departmentList={departments}
+          activeItemId={activeDepartmentId}
+          changeActiveItem={changeActiveDepartmentId}
+        />
+      ) : (
+        <Box>
+          <Typography variant='h4' component='h2' textAlign={'center'}>
+            List empty
+          </Typography>
+        </Box>
+      )}
     </>
   )
 }

@@ -12,10 +12,17 @@ type PropsType = {
   active?: boolean
   changeTitle: (title: string) => void
   deleteDepartment: () => void
+  toggleActiveStatus: () => void
 }
 
 export const Department = memo(
-  ({ title, changeTitle, deleteDepartment, active }: PropsType) => {
+  ({
+    title,
+    changeTitle,
+    deleteDepartment,
+    active,
+    toggleActiveStatus,
+  }: PropsType) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
     const isOpen = Boolean(anchorEl)
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -43,6 +50,7 @@ export const Department = memo(
         justifyContent={'space-between'}
         alignItems={'center'}
         className={itemClass}
+        onClick={toggleActiveStatus}
       >
         <Box sx={{ pl: '0.5rem' }}>
           <EditableSpan isEdit={isEdit} value={title} onChange={rename} />

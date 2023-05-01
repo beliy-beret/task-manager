@@ -102,14 +102,9 @@ const slice = createSlice({
         const index = state.findIndex((t) => t.id === action.payload.taskId)
         if (index !== -1) state.splice(index, 1)
       })
-      .addCase(
-        departmentsThunks.removeDepartment.fulfilled,
-        (state, action) => {
-          if (state[0].todoListId === action.payload.id) {
-            return []
-          }
-        }
-      )
+      .addCase(departmentsThunks.removeDepartment.fulfilled, () => {
+        return []
+      })
   },
 })
 

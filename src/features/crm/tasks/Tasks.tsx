@@ -1,4 +1,4 @@
-import { Box, Divider } from '@mui/material'
+import { Box, Divider, Typography } from '@mui/material'
 import React, { useEffect } from 'react'
 
 import { AddItemForm } from 'common/components'
@@ -28,7 +28,15 @@ export const Tasks = () => {
         <AddItemForm addItem={createTask} placeHolder={'Task title'} />
       </Box>
       <Divider orientation='horizontal' sx={{ m: '0.5rem 0' }} />
-      <TaskList taskList={tasks} />
+      {tasks.length ? (
+        <TaskList taskList={tasks} />
+      ) : (
+        <Box>
+          <Typography variant='h4' component='h2' textAlign={'center'}>
+            {activeDepartmentId ? 'List empty' : 'Choose a department'}
+          </Typography>
+        </Box>
+      )}
     </>
   )
 }

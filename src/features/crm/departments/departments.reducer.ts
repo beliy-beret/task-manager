@@ -94,7 +94,9 @@ const slice = createSlice({
           ...dept,
           entityStatus: 'idle',
         }))
-        state.activeDepartmentId = action.payload.departments[1].id
+        if (action.payload.departments.length) {
+          state.activeDepartmentId = action.payload.departments[0].id
+        }
       })
       .addCase(addDepartment.fulfilled, (state, action) => {
         const newDepartment: DepartmentDomainType = {
@@ -107,7 +109,10 @@ const slice = createSlice({
         const index = state.departments.findIndex(
           (dept) => dept.id === action.payload.id
         )
-        if (index !== -1) state.departments.splice(index, 1)
+        if (index !== -1) {
+          state.departments.splice(index, 1)
+          state.activeDepartmentId = ''
+        }
       })
       .addCase(changeDepartmentTitle.fulfilled, (state, action) => {
         const dept = state.departments.find(
