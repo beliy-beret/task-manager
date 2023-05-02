@@ -52,14 +52,14 @@ export const TaskForm: FC<PropsType> = ({
       if (values.description?.length > 1000) {
         errors.description = 'Max length 1000'
       }
-      if (values.deadline < Date()) {
-        errors.deadline = 'Date should be after now'
+      if (Date.parse(values.deadline) < Date.parse(initialValues.deadline)) {
+        errors.deadline = 'Date should be now or later'
       }
 
       return errors
     },
   })
-  console.log(formik.values.deadline)
+
   return (
     <Modal open={open} onClose={closeForm}>
       <Box sx={style}>
@@ -70,6 +70,7 @@ export const TaskForm: FC<PropsType> = ({
             label='Task title'
             margin='normal'
             error={!!formik.errors.title}
+            helperText={formik.errors.title}
             {...formik.getFieldProps('title')}
           />
           <TextField
@@ -79,6 +80,7 @@ export const TaskForm: FC<PropsType> = ({
             multiline
             rows={5}
             error={!!formik.errors.description}
+            helperText={formik.errors.description}
             {...formik.getFieldProps('description')}
           />
           <TextField
@@ -89,6 +91,7 @@ export const TaskForm: FC<PropsType> = ({
             label='Dead line'
             margin='normal'
             error={!!formik.errors.deadline}
+            helperText={formik.errors.deadline}
             {...formik.getFieldProps('deadline')}
           />
           <TextField

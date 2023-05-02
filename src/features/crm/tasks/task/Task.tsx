@@ -66,9 +66,24 @@ export const Task = memo(({ task, removeTask, updateTask }: PropsType) => {
     }
   }
 
+  const padTo2Digits = (num: number) => {
+    return num.toString().padStart(2, '0')
+  }
+
+  const getTodayDate = () => {
+    const date = new Date()
+    return [
+      date.getFullYear(),
+      padTo2Digits(date.getMonth() + 1),
+      padTo2Digits(date.getDate()),
+    ].join('-')
+  }
+
+  const today = getTodayDate()
+
   const initialValues: UpdateTaskModelType = {
     title: task.title,
-    deadline: task.deadline || '2023-05-05',
+    deadline: task.deadline || today,
     description: task.description || '',
     priority: task.priority,
     startDate: task.startDate,
