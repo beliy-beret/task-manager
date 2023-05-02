@@ -68,8 +68,8 @@ export const Task = memo(({ task, removeTask, updateTask }: PropsType) => {
 
   const initialValues: UpdateTaskModelType = {
     title: task.title,
-    deadline: task.deadline,
-    description: task.description,
+    deadline: task.deadline || '2023-05-05',
+    description: task.description || '',
     priority: task.priority,
     startDate: task.startDate,
     status: task.status,

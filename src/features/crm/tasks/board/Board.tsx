@@ -1,9 +1,9 @@
+import { BoardTitles, ItemTypes } from '../taskList/TaskList'
 import { Box, Typography } from '@mui/material'
 import React, { FC, ReactNode } from 'react'
-
-import { BoardTitles, ItemTypes } from '../taskList/TaskList'
-import { TaskStatuses } from 'common/enums'
 import { TaskType, UpdateTaskArgType } from '../tasks.api'
+
+import { TaskStatuses } from 'common/enums'
 import { useDrop } from 'react-dnd'
 
 type PropsType = {
@@ -52,16 +52,26 @@ export const Board: FC<PropsType> = ({ children, title, onDrop }) => {
       sx={{
         backgroundColor: boardBG,
         mr: '0.5rem',
-        p: '0.5rem',
-        height: '100%',
+        p: '0 0.5rem 1rem',
+        height: '86vh',
         gap: '0.5rem',
+        overflowY: 'scroll',
+        border: isOver ? '3px solid grey' : 'none',
       }}
     >
       <Typography
         variant={'h3'}
         fontSize={'1.5rem'}
         textAlign={'center'}
-        sx={{ textDecoration: 'underline' }}
+        sx={{
+          textDecoration: 'underline',
+          position: 'sticky',
+          top: 0,
+          bgcolor: 'inherit',
+          p: '0.5rem',
+          zIndex: '1',
+          opacity: '0.9',
+        }}
       >
         {title}
       </Typography>

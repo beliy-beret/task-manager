@@ -1,8 +1,9 @@
-import React, { FC } from 'react'
 import { Box, Button, MenuItem, Modal, TextField } from '@mui/material'
-import { useFormik } from 'formik'
-import { UpdateTaskModelType } from '../tasks.api'
+import React, { FC } from 'react'
+
 import { TaskStatuses } from 'common/enums'
+import { UpdateTaskModelType } from '../tasks.api'
+import { useFormik } from 'formik'
 
 type PropsType = {
   open: boolean
@@ -10,6 +11,8 @@ type PropsType = {
   closeForm: (e: object, reason?: 'backdropClick' | 'escapeKeyDown') => void
   onSubmit: (formData: UpdateTaskModelType) => void
 }
+
+type FormErrorsType = Partial<UpdateTaskModelType>
 
 const style = {
   position: 'absolute',
@@ -41,16 +44,32 @@ export const TaskForm: FC<PropsType> = ({
       onSubmit(values)
       closeForm({})
     },
-  })
+    validate: (values) => {
+      const errors: FormErrorsType = {}
+      if (values.title?.length > 100) {
+        errors.title = 'Max length 100'
+      }
+      if (values.description?.length > 1000) {
+        errors.description = 'Max length 1000'
+      }
+      if (values.deadline < Date()) {
+        errors.deadline = 'Date should be after now'
+      }
 
+      return errors
+    },
+  })
+  console.log(formik.values.deadline)
   return (
     <Modal open={open} onClose={closeForm}>
       <Box sx={style}>
         <form onSubmit={formik.handleSubmit}>
           <TextField
+            size='small'
             fullWidth
             label='Task title'
             margin='normal'
+            error={!!formik.errors.title}
             {...formik.getFieldProps('title')}
           />
           <TextField
@@ -59,17 +78,21 @@ export const TaskForm: FC<PropsType> = ({
             margin='normal'
             multiline
             rows={5}
+            error={!!formik.errors.description}
             {...formik.getFieldProps('description')}
           />
           <TextField
+            size='small'
             InputLabelProps={{ shrink: true }}
             type={'date'}
             fullWidth
             label='Dead line'
             margin='normal'
+            error={!!formik.errors.deadline}
             {...formik.getFieldProps('deadline')}
           />
           <TextField
+            size='small'
             select
             label='Status'
             fullWidth
@@ -89,6 +112,7 @@ export const TaskForm: FC<PropsType> = ({
               variant={'contained'}
               color={'primary'}
               sx={{ mr: '0.5rem' }}
+              disabled={!formik.dirty || !formik.isValid}
             >
               Save
             </Button>

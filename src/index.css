@@ -10,13 +10,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
-html, body {
-  height: 100%;
+* {
+  box-sizing: border-box;
   padding: 0;
-  margin: 0;
-  overflow: hidden;
+  margin: 0;  
+}
+html {
+  max-height: 100vh;
 }
 
-#root {
+body, #root {
   height: 100%;
 }

@@ -1,5 +1,6 @@
 import {
   AppBar,
+  Box,
   Button,
   CircularProgress,
   Container,
@@ -49,26 +50,31 @@ const App = () => {
   return (
     <BrowserRouter>
       <ErrorSnackbar />
-      <AppBar position='sticky'>
-        <Toolbar>
-          {isLoggedIn && (
-            <Button
-              color='inherit'
-              sx={{ fontWeight: '800' }}
-              onClick={logoutHandler}
-            >
-              Logout
-            </Button>
-          )}
-        </Toolbar>
-        {status === 'loading' && <LinearProgress />}
-      </AppBar>
-      <Container maxWidth={false} sx={{ maxWidth: '1980px', height: '100%' }}>
-        <Routes>
-          <Route path={'/'} element={<Desk />} />
-          <Route path={'/login'} element={<Login />} />
-        </Routes>
-      </Container>
+      <Box display={'grid'} gridTemplateRows={'auto 1fr'} height={'100vh'}>
+        <Box>
+          <AppBar position='sticky'>
+            <Toolbar>
+              {isLoggedIn && (
+                <Button
+                  color='inherit'
+                  sx={{ fontWeight: '800' }}
+                  onClick={logoutHandler}
+                >
+                  Logout
+                </Button>
+              )}
+            </Toolbar>
+            {status === 'loading' && <LinearProgress />}
+          </AppBar>
+        </Box>
+
+        <Container maxWidth={false} sx={{ maxWidth: '1980px', height: '100%' }}>
+          <Routes>
+            <Route path={'/'} element={<Desk />} />
+            <Route path={'/login'} element={<Login />} />
+          </Routes>
+        </Container>
+      </Box>
     </BrowserRouter>
   )
 }

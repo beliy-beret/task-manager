@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 
 import { Board } from '../board/Board'
-import { Grid } from '@mui/material'
+import { Box } from '@mui/material'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { Task } from '../task/Task'
@@ -57,23 +57,29 @@ export const TaskList: FC<PropsType> = ({ taskList }) => {
     ))
   return (
     <DndProvider backend={HTML5Backend}>
-      <Grid container alignItems={'stretch'} sx={{ height: '100%' }}>
-        <Grid item xs={4}>
+      <Box
+        display='grid'
+        gridTemplateColumns='1fr 1fr 1fr'
+        alignItems='stretch'
+        height='86vh'
+        overflow={'hidden'}
+      >
+        <Box>
           <Board title={BoardTitles.NEW} onDrop={updateTask}>
             {newTasks}
           </Board>
-        </Grid>
-        <Grid item xs={4}>
+        </Box>
+        <Box>
           <Board title={BoardTitles.INPROGRESS} onDrop={updateTask}>
             {tasksInProgress}
           </Board>
-        </Grid>
-        <Grid item xs={4}>
+        </Box>
+        <Box>
           <Board title={BoardTitles.COMPLETED} onDrop={updateTask}>
             {completedTasks}
           </Board>
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
     </DndProvider>
   )
 }
